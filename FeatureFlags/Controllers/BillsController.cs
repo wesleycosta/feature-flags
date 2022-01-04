@@ -28,11 +28,11 @@ public class BillsController : ControllerBase
 
     [HttpGet("v2")]
     [FeatureGate(FeatureFlagsNames.BillFlag)]
-    public IActionResult GetRoute2()
+    public IActionResult GetRoute2([FromHeader] string version)
     {
         return Ok(new
         {
-            Message = "it worked in the version 2.0!"
+            Message = $"it worked in the version {version}"
         });
     }
 }

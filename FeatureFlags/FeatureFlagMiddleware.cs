@@ -12,6 +12,12 @@ public class FeatureFlagMiddleware
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
+        if (httpContext.Request.Headers["version"] != "2.0")
+        {
+            httpContext.Response.StatusCode = 404;
+            return;
+        }
+
         await _next(httpContext);
     }
 }
