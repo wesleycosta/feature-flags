@@ -13,21 +13,20 @@ public class BillsController : ControllerBase
     public BillsController(IFeatureManager featureManager) =>
         _featureManager = featureManager;
 
-    [HttpGet("{feature}")]
-    public async Task<IActionResult> Get(string feature)
+    [HttpGet]
+    [FeatureGate(FeatureFlagsNames.BillFlag)]
+    public IActionResult Get()
     {
-        var isEnabled = await _featureManager.IsEnabledAsync(feature);
         var featureNames = _featureManager.GetFeatureNamesAsync();
 
         return Ok(new
         {
-            Message = $"O value of {feature} is {isEnabled}",
             FeatureNames = featureNames,
         });
     }
 
     [HttpGet("v2")]
-    [FeatureGate(FeatureFlagsNames.BillFlag)]
+    [FeatureGate(FeatureFlagsNames.MidFlag)]
     public IActionResult GetRoute2([FromHeader] string version)
     {
         return Ok(new
