@@ -14,7 +14,6 @@ public class BillsController : ControllerBase
         _featureManager = featureManager;
 
     [HttpGet]
-    [FeatureGate(FeatureFlagsNames.BillFlag)]
     public IActionResult Get()
     {
         var featureNames = _featureManager.GetFeatureNamesAsync();
@@ -26,12 +25,12 @@ public class BillsController : ControllerBase
     }
 
     [HttpGet("v2")]
-    [FeatureGate(FeatureFlagsNames.MidFlag)]
-    public IActionResult GetRoute2([FromHeader] string version)
+    [FeatureGate(FeatureFlagsNames.BillFlag)]
+    public IActionResult GetRoute2()
     {
         return Ok(new
         {
-            Message = $"it worked in the version {version}"
+            Message = $"it worked in the version v2"
         });
     }
 }
